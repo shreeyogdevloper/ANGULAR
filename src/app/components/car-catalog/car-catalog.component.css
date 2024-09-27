@@ -1,0 +1,76 @@
+.container {
+    margin-top: 20px;
+  }
+  
+  .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid #f7f7f7;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .card-text {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  strong {
+    font-weight: bold;
+  }
+  
+  h6 {
+    font-weight: bold;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #2c3e50;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  /* Search Input Styling */
+  input.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  input.form-control::placeholder {
+    color: #999;
+  }
+  
+  input.form-control:focus {
+    border-color: #007bff; /* Bootstrap primary color */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    outline: none;
+  }
+  

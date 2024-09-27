@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); }
+        .table img { object-fit: cover; width: 50px; height: 50px; }
+    </style>
+</head>
+<body>
+    <div >
+        <div class="row">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Car Management</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button class="btn btn-sm btn-outline-secondary" (click)="openModal()">
+                            <i class="fas fa-plus"></i> Add New Car
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+                                <button (click)="onSort('DateOfManufacturing')" class="btn btn-outline-primary me-2">
+                                    <i class="fas fa-sort-amount-down"></i> Sort by Date
+                                </button>
+                                <button (click)="onSort('SortOrder')" class="btn btn-outline-primary">
+                                    <i class="fas fa-sort-numeric-down"></i> Sort by Order
+                                </button>
+                            </div>
+                           
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Image</th>
+                                        <th>Brand</th>
+                                        <th>Class</th>
+                                        <th>Model Name</th>
+                                        <th>Model Code</th>
+                                        <th>Price</th>
+                                        <th>Date of Manufacturing</th>
+                                        <th>Active</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let car of cars">
+                                        <td>{{ car.id }}</td>
+                                        <td>
+                                            <img *ngIf="car.images.length > 0" [src]="car.images[0]" alt="{{ car.modelName }}" class="rounded-circle">
+                                            <span *ngIf="car.images.length === 0" class="badge bg-secondary">No Image</span>
+                                        </td>
+                                        <td>{{ car.brand }}</td>
+                                        <td>{{ car.class }}</td>
+                                        <td>{{ car.modelName }}</td>
+                                        <td>{{ car.modelCode }}</td>
+                                        <td>{{ car.price | currency }}</td>
+                                        <td>{{ car.dateOfManufacturing | date:'mediumDate' }}</td>
+                                        <td>
+                                            <span class="badge" [ngClass]="{'bg-success': car.active, 'bg-danger': !car.active}">
+                                                {{ car.active ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1" (click)="openModal(car)">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" (click)="deleteCar(car.id)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" [ngClass]="{'show': showModal}" tabindex="-1" role="dialog" [ngStyle]="{'display': showModal ? 'block' : 'none'}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ isEditing ? 'Edit Car' : 'Add New Car' }}</h5>
+                    <button type="button" class="btn-close" (click)="closeModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="brand" class="form-label">Brand</label>
+                                <select class="form-select" formControlName="brand" required>
+                                    <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="class" class="form-label">Class</label>
+                                <select class="form-select" formControlName="class" required>
+                                    <option *ngFor="let carClass of carClasses" [value]="carClass">{{ carClass }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="modelName" class="form-label">Model Name</label>
+                                <input type="text" class="form-control" id="modelName" formControlName="modelName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="modelCode" class="form-label">Model Code</label>
+                                <input type="text" class="form-control" id="modelCode" formControlName="modelCode" appModelCodeValidator required>
+                                <div *ngIf="carForm.get('modelCode')?.errors?.['invalidModelCode'] && (carForm.get('modelCode')?.touched || carForm.get('modelCode')?.dirty)" class="text-danger">
+                                    Model Code must be 10 alphanumeric characters.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" formControlName="description" required rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="features" class="form-label">Features</label>
+                            <input type="text" class="form-control" id="features" formControlName="features" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <input type="number" class="form-control" id="price" formControlName="price" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="sortOrder" class="form-label">Sort Order</label>
+                                <input type="number" class="form-control" id="sortOrder" formControlName="sortOrder" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label d-block">&nbsp;</label>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="active" formControlName="active">
+                                    <label class="form-check-label" for="active">Active</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="images" class="form-label">Images (Max 5MB each)</label>
+                            <input type="file" id="images" (change)="onFileSelect($event)" multiple accept="image/*" class="form-control">
+                        </div>
+                        <div *ngIf="selectedFiles.length > 0" class="mb-3">
+                            <h6>Selected Files:</h6>
+                            <ul class="list-group">
+                                <li *ngFor="let file of selectedFiles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ file.name }}
+                                    <span class="badge bg-primary rounded-pill">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary me-2" (click)="closeModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="!carForm.valid">{{ isEditing ? 'Update' : 'Add' }} Car</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

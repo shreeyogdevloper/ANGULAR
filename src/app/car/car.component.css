@@ -1,0 +1,141 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+/* Header Styles */
+.car-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 15px;
+}
+
+.user-info a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* Add Car Button Styles */
+.btn-add-car {
+    position: relative;
+    top: 10px;
+    z-index: 1;
+}
+
+/* Table Container Styles */
+.table-container {
+    position: relative;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+    margin-top: -10px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table-dark {
+    background-color: #34495e;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+/* Image Styles */
+.table img {
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+/* Action Button Styles */
+.btn-danger {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    margin-left: 5px;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-header {
+    background-color: #3498db;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.btn-close {
+    color: white;
+}
+
+.modal-footer {
+    border-top: none;
+}

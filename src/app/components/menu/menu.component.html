@@ -1,0 +1,15 @@
+<nav class="menu-container">
+    <div class="menu">
+      <div class="menu-logo">Car Management</div>
+      <ul class="menu-items">
+        <li class="menu-item"><a class="menu-link" routerLink="/home" routerLinkActive="active">Home</a></li>
+        <li class="menu-item" *ngIf="currentUser?.role === 'admin'"><a class="menu-link" routerLink="/cars" routerLinkActive="active">Manage Cars</a></li>
+        <li class="menu-item" *ngIf="currentUser?.role === 'user'"><a class="menu-link" routerLink="/car-catalog" routerLinkActive="active">Car Catalog</a></li>
+        <li class="menu-item" *ngIf="!currentUser"><a class="menu-link" routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li class="menu-item" *ngIf="currentUser"><button class="menu-button" (click)="logout()">Logout</button></li>
+      </ul>
+    </div>
+  </nav>
+
+
+ 

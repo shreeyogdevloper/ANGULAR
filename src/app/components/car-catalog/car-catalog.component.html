@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Catalog</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { 
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        .search-box {
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-car"></i> LuxuryCars
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                   
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Luxury Car</h1>
+        
+        <!-- Search Box -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-6">
+                <div class="search-box">
+                    <input
+                        type="text"
+                        class="form-control border-0"
+                        placeholder="Search by Model Name or Brand"
+                        [(ngModel)]="searchTerm"
+                        (input)="filterCars()"
+                    />
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div *ngFor="let car of filteredCars" class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img
+                        *ngIf="car.images && car.images.length > 0"
+                        [src]="car.images[0]"
+                        class="card-img-top"
+                        alt="{{ car.modelName }}"
+                    />
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ car.brand }} {{ car.modelName }}</h5>
+                        <p class="card-text flex-grow-1">{{ car.description }}</p>
+                        <div class="mt-auto">
+                            <p class="card-text">
+                                <strong>Class:</strong> {{ car.class }}
+                            </p>
+                            <p class="card-text">
+                                <strong>Price:</strong> {{ car.price | currency }}
+                            </p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">About LuxuryCars</h5>
+                    <p>
+                        We offer a wide range of luxury vehicles for the discerning customer. 
+                        Explore our catalog to find your dream car.
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="#!" class="text-dark">FAQ</a></li>
+                        <li><a href="#!" class="text-dark">Terms of Service</a></li>
+                        <li><a href="#!" class="text-dark">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Contact</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="#!" class="text-dark">Email</a></li>
+                        <li><a href="#!" class="text-dark">Phone</a></li>
+                        <li><a href="#!" class="text-dark">Location</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2024 LuxuryCars. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
